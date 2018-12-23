@@ -27,8 +27,23 @@ export default class QueryFunctions {
       return Promise.resolve(response);
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
+      return Promise.reject(error);
     })
   }
 
+  getCurrentSensordata(token) {
+    return axios.get('/api/get/currentsensordata', {
+      headers: {
+        token: `${token}`
+      }
+    })
+    .then(function (response) {
+      return Promise.resolve(response);
+    })
+    .catch(function (error) {
+      console.error(error);
+      return Promise.reject(error);
+    })
+  }
 }

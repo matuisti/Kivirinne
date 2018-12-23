@@ -60,6 +60,7 @@ class Home extends Component {
     var token = this.Auth.getToken();
     this.Query.getDhtData(token, 1, 'YEAR')
     .then(response => {
+      console.log(response.data)
       this.setState({
         rawData: response.data
       })
@@ -112,7 +113,7 @@ class Home extends Component {
             {
               !this.state.lineLoad
                 ? <div className="Graph-loader"/>
-              : <LineChart container="lineChart1" type="Chart" title="Sisäilma" base="full" data={this.state.lineChartData} />
+              : <LineChart container="lineChart1" type="Chart" title="Sisäilma" data={this.state.lineChartData} />
             }
           </div>
         </div>

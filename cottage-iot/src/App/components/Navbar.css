@@ -7,7 +7,6 @@
 }
 
 .topnav {
-  --position: absolute;
   background-color: white;
   height: 62px;
   width: 100%;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Highcharts from 'highcharts/highstock';
 import SolidGauge from 'highcharts/modules/solid-gauge';
-import axios from 'axios';
-import { lineChartOptions, pieChartOptions } from './chartOptions/LineChartOptions.js';
+import { lineChartOptions, gaugeChartOptions } from './chartOptions/LineChartOptions.js';
 import './ChartStyles.css';
 
 class PieChart extends Component {
@@ -14,11 +13,11 @@ class PieChart extends Component {
   }
 
   async componentDidMount() {
-    this.state.chartOptions = pieChartOptions(this.props);
+    this.state.chartOptions = gaugeChartOptions(this.props);
     Highcharts.setOptions({
       lang: {
         months: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Keäskuu', 'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
-        weekdays: ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai'],
+        weekdays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
         shortMonths: ['Tam', 'Hel', 'Maa', 'Huh', 'Tou', 'Kes', 'Hei', 'Elo', 'Syy', 'Lok', 'Mar', 'Jou'],
         resetZoom: "Nollaa zoom"
       },
@@ -35,8 +34,8 @@ class PieChart extends Component {
 
   render() {
     return (
-      <div className="line-chart-body">
-        <div className="line-chart-wrapper" key={this.props.key} id={this.props.container}></div>
+      <div className="pie-chart-body">
+        <div className="pie-chart-wrapper" key={this.props.key} id={this.props.container}></div>
       </div>
     );
   }

@@ -29,25 +29,83 @@ api.use(function(req, res, next) {
     }
 });
 
-
+/*
+  Returns all sensor data from the specified time interval
+  param [ interval : integer value ] description [ time parameter ]
+  param [ intervalformat : string value ] description [ time format example WEEK or DAY ]
+*/
 api.get('/get/dht', function(req, res) {
   const { interval, intervalformat } = req.query;
 
-  var appData = {};
+  var appData = [];
   database.connection.getConnection(function(err, connection) {
       if (err) {
           appData["error"] = 1;
           appData["data"] = "Internal Server Error";
           res.status(500).json(appData);
       } else {
-        var sql = 'SELECT id, device_id, DATE_FORMAT(time,\'%m-%d-%Y %H:%i\') as time, temperature, humidity, voltage, awake_time FROM raw_air_data WHERE time BETWEEN timestamp(DATE_SUB(NOW(), INTERVAL ' + interval + ' ' + intervalformat + ')) AND timestamp(NOW())';
+        var sql = 'SELECT id, device_id, UNIX_TIMESTAMP(time) as time, temperature, humidity, voltage, awake_time FROM raw_air_data WHERE '
+          + 'time BETWEEN timestamp(DATE_SUB(NOW(), INTERVAL ' + interval + ' ' + intervalformat + ')) AND timestamp(NOW())';
+
         connection.query(sql, function(error, rows, fields) {
             if (!error) {
-                appData["data"] = rows;
-                res.status(200).json(appData);
+              if(!Object.keys(rows).length){
+                appData = {};
+                appData["error"] = 1;
+                appData["data"] = "Not Found";
+                res.status(404).json(appData);
+              } else {
+              rows.map(function(key, index) {
+                appData.push({
+                  id: rows[index].id,
+                  deviceId: rows[index].device_id,
+                  time: rows[index].time,
+                  airData: {
+                    temperature: rows[index].temperature,
+                    humidity: rows[index].humidity
+                  },
+                  voltage: rows[index].voltage,
+                  awakeTime: rows[index].awake_time
+                })
+              });
+              res.status(200).json(appData);
+            }
             } else {
                 appData["data"] = error;
                 res.status(400).json(appData);
+            }
+        });
+        connection.release();
+      }
+  });
+});
+
+/*
+  Returns all sensors last measurement data
+*/
+api.get('/get/currentsensordata', function(req, res) {
+  var appData = {};
+
+  database.connection.getConnection(function(err, connection) {
+      if (err) {
+          appData["error"] = 1;
+          appData["data"] = "Internal Server Error";
+          res.status(500).json(appData);
+      } else {
+        var sql = 'SELECT * FROM raw_air_data WHERE id IN (SELECT MAX(id) AS id FROM raw_air_data GROUP BY device_id)';
+        connection.query(sql, function(error, rows, fields) {
+            if (!error) {
+              if(!Object.keys(rows).length) {
+                appData["error"] = 1;
+                appData["data"] = "Not Found";
+                res.status(404).json(appData);
+              } else {
+                appData["data"] = rows;
+                res.status(200).json(appData);
+              }
+            } else {
+              appData["data"] = error;
+              res.status(400).json(appData);
             }
         });
         connection.release();

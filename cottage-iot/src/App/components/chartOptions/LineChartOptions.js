@@ -186,7 +186,7 @@ function gaugeChartOptions(params) {
         dataLabels: {
           y: -45,
           backgroundColor: 'none',
-          format: '<div style="text-align:center"><span>Kosteus</span></br><span style="font-size:15px;color:' +
+          format: '<div style="text-align:center; font-size: 13px; color: grey; font-family:Arial, Helvetica, sans-serif;"><span>Kosteus</span></br><span style="font-size:15px;color:' +
             ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span>' +
             '<span style="font-size:12px;color:grey">%</span></div>'
         },
@@ -201,8 +201,8 @@ function gaugeChartOptions(params) {
         dataLabels: {
           y: -0,
           backgroundColor: 'none',
-          format: '<div style="text-align:center"><span>Lämpötila</span></br><span style="font-size:15px;color:' +
-            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span>' +
+          format: '<div style="text-align:center; font-size: 13px; color: grey; font-family:Arial, Helvetica, sans-serif;"><span>Lämpötila</span></br><span style="font-size:15px; color: black;'
+            + '">{y:.1f}</span>' +
             '<span style="font-size:12px;color:grey">°C</span></div>'
         },
       }]

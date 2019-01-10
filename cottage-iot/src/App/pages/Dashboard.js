@@ -33,6 +33,10 @@ class Camera extends Component {
     }).catch(error => {
       console.error(error);
     })
+
+    this.Query.getWeatherForecast().then(response =>{
+      console.log(response);
+    })
   }
 
   render() {

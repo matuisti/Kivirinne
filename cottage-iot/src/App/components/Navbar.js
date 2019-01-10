@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import AuthService from '../Authentication/AuthService';
-import classNames from 'classnames'
+import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 import './Navbar.css';
 
@@ -27,12 +27,13 @@ class Navbar extends Component {
 
   render(){
     var arrowClasses = classNames({
-      'fa fa-caret-down': true,
+      'fa fa-caret-down': true }, {
       'rotate': this.state.dropDown
     });
     var dropdownClasses = classNames(
-      this.state.dropDown ? 'dropdown-content-visible':'dropdown-content-hidden',
-      'dropdown-content': true
+      this.state.dropDown ? 'dropdown-content-visible':'dropdown-content-hidden',{
+      'dropdown-content' : true
+      }
     );
 
     return (

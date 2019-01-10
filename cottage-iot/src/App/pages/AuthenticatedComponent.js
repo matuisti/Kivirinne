@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import AuthService from '../Authentication/AuthService';
-import axios from 'axios';
 
 class AuthenticatedComponent extends Component {
   constructor(props){
@@ -32,7 +30,7 @@ class AuthenticatedComponent extends Component {
         this.props.history.push('/login');
       });
   }
-  
+
   render() {
     if (this.state.user == null) {
       return (

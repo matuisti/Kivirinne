@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import AuthService from '../Authentication/AuthService';
-import axios from 'axios';
 import './ChartStyles.css';
-import { lineChartOptions, pieChartOptions } from './chartOptions/LineChartOptions.js';
+import { lineChartOptions, pieChartOptions, plainLineChartOptions } from './chartOptions/LineChartOptions.js';
 import Highcharts from 'highcharts/highstock';
 
 class LineChart extends Component {
@@ -15,11 +12,20 @@ class LineChart extends Component {
   }
 
   async componentDidMount() {
-    this.state.chartOptions = lineChartOptions(this.props);
+    switch (this.props.base) {
+      case 'plain':
+        this.state.chartOptions = plainLineChartOptions(this.props);
+        break;
+      case 'full':
+        this.state.chartOptions = lineChartOptions(this.props);
+        break;
+      default:
+    }
+
     Highcharts.setOptions({
       lang: {
         months: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Keäskuu', 'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
-        weekdays: ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai'],
+        weekdays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
         shortMonths: ['Tam', 'Hel', 'Maa', 'Huh', 'Tou', 'Kes', 'Hei', 'Elo', 'Syy', 'Lok', 'Mar', 'Jou'],
         resetZoom: "Nollaa zoom"
       },

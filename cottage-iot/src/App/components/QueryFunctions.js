@@ -27,7 +27,33 @@ export default class QueryFunctions {
       return Promise.resolve(response);
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
+      return Promise.reject(error);
+    })
+  }
+
+  getCurrentSensordata(token) {
+    return axios.get('/api/get/currentsensordata', {
+      headers: {
+        token: `${token}`
+      }
+    })
+    .then(function (response) {
+      return Promise.resolve(response);
+    })
+    .catch(function (error) {
+      console.error(error);
+      return Promise.reject(error);
+    })
+  }
+
+  getWeatherForecast() {
+    return axios.get('http://api.openweathermap.org/data/2.5/forecast?id=654047&APPID=cb00db7a6e3bddca1986870cb15a0dfe')
+    .then(function (response) {
+      return Promise.resolve(response);
+    })
+    .catch(function (error) {
+      console.error(error);
     })
   }
 

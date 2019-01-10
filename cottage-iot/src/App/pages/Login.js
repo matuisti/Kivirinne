@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import AuthService from '../Authentication/AuthService';
-import './Login.css';
+import './styles/Login.css';
 
 class Login extends Component {
   constructor(props){
@@ -26,7 +25,7 @@ class Login extends Component {
     if (this.state.email && this.state.password) {
       this.Auth.login(this.state.email, this.state.password)
         .then(response => {
-          this.props.history.push('/home');
+          this.props.history.push('/dashboard');
         })
         .catch(err => {
           alert(err);

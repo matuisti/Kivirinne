@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ChartStyles.css';
-import { lineChartOptions, pieChartOptions, plainLineChartOptions } from './chartOptions/LineChartOptions.js';
+import { lineChartOptions, plainLineChartOptions, highchartsLaquageOptions } from './chartOptions/ChartOptions.js';
 import Highcharts from 'highcharts/highstock';
 
 class LineChart extends Component {
@@ -22,14 +22,8 @@ class LineChart extends Component {
       default:
     }
 
-    Highcharts.setOptions({
-      lang: {
-        months: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Keäskuu', 'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
-        weekdays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
-        shortMonths: ['Tam', 'Hel', 'Maa', 'Huh', 'Tou', 'Kes', 'Hei', 'Elo', 'Syy', 'Lok', 'Mar', 'Jou'],
-        resetZoom: "Nollaa zoom"
-      },
-    });
+    highchartsLaquageOptions();
+
     this.state.chartOptions.chart = new Highcharts[this.props.type || "Chart"](
       this.props.container,
       this.state.chartOptions

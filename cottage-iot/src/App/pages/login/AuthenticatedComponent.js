@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import AuthService from '../Authentication/AuthService';
+import AuthService from '../../Authentication/AuthService';
 
 class AuthenticatedComponent extends Component {
   constructor(props){

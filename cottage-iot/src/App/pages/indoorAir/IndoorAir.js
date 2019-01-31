@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
-import LineChart from '../components/LineChart';
-import PieChart from '../components/PieChart';
-import AuthService from '../Authentication/AuthService';
-import QueryFunctions from '../components/QueryFunctions';
-import './styles/Home.css';
+import Navbar from '../../components/Navbar';
+import LineChart from '../../components/charts/LineChart';
+import PieChart from '../../components/charts/PieChart';
+import CircularProgressBar from '../../components/charts/CircularProgressBar';
+import AuthService from '../../Authentication/AuthService';
+import QueryFunctions from '../../components/QueryFunctions';
+import './IndoorAir.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import isAfter from 'date-fns/is_after';
 import Highcharts from 'highcharts/highstock';
-import DatePicker, { registerLocale } from "react-datepicker";
 
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 import DayPicker from 'react-day-picker';
+
 import 'react-day-picker/lib/style.css';
-import MomentLocaleUtils from 'react-day-picker/moment';
+
+import MomentLocaleUtils, {
+  formatDate,
+  parseDate,
+} from 'react-day-picker/moment';
+
 import 'moment/locale/fi';
 
-class Home extends Component {
+class IndoorAir extends Component {
   constructor(props) {
     super(props);
     this.Auth = new AuthService();
@@ -30,7 +37,8 @@ class Home extends Component {
       startDate: null,
       endDate: null,
       locale: 'fi',
-    }
+    };
+    this.shortChartData = this.shortChartData.bind(this);
   }
 
   handleError(error) {
@@ -80,6 +88,10 @@ class Home extends Component {
       this.setState({pieChartData: rawData, pieLoad: true})
   }
 
+  shortChartData() {
+    console.log(this.state.startDate, this.state.endDate);
+  }
+
   componentDidMount() {
     var token = this.Auth.getToken();
     this.Query.getDhtData(token, 1, 'YEAR')
@@ -101,65 +113,69 @@ class Home extends Component {
       <div className="body">
       <Navbar/>
       <div className="chart-row2">
-        <div className="chart-column side">
+        <div className="chart-column full">
           <div className="chart">
             {
-              !this.state.pieLoad
-                ? <div className="Graph-loader"/>
-              : <PieChart container="pieChart2" type="Chart" title="Olohuone" data={this.state.pieChartData} />
-            }
-          </div>
-        </div>
-        <div className="chart-column side">
-          <div className="chart">
-            {
-              !this.state.pieLoad
-                ? <div className="Graph-loader"/>
-              : <PieChart container="pieChart3" type="Chart" title="Makuuhuone" data={this.state.pieChartData} />
-            }
-          </div>
-        </div>
-        <div className="chart-column side">
-          <div className="chart">
-            {
-              !this.state.pieLoad
-                ? <div className="Graph-loader"/>
-              : <PieChart container="pieChart4" type="Chart" title="Keittiö" data={this.state.pieChartData} />
+              !this.state.pieLoad ? <div className="Graph-loader"/> :
+              <div>
+              <div style={{float: 'left'}}>
+                <label style={{display: 'block'}}>Keittiö</label>
+                <CircularProgressBar type={'temp'} percentage={this.state.pieChartData[0].data} unit={'°C'} clockwise={false} />
+                <CircularProgressBar type={'hum'} percentage={this.state.pieChartData[1].data} unit={'%'} clockwise={false} />
+              </div>
+              <div style={{float: 'left'}}>
+                <label style={{display: 'block'}}>Eteinen</label>
+                <CircularProgressBar type={'temp'} percentage={this.state.pieChartData[0].data} unit={'°C'} clockwise={false} />
+                <CircularProgressBar type={'hum'} percentage={this.state.pieChartData[1].data} unit={'%'} clockwise={false} />
+              </div>
+              <div style={{float: 'left'}}>
+                <label style={{display: 'block'}}>Olohuone</label>
+                <CircularProgressBar type={'temp'} percentage={this.state.pieChartData[0].data} unit={'°C'} clockwise={false} />
+                <CircularProgressBar type={'hum'} percentage={this.state.pieChartData[1].data} unit={'%'} clockwise={false} />
+              </div>
+              </div>
             }
           </div>
         </div>
       </div>
+
       <div className="chart-controller">
         <div className="chart-column full">
           <div className="controller">
+            <label style={{display: 'block'}}>Etsi aikaväliltä</label>
             <div className="date-picker">
-              <DayPicker
-                localeUtils={MomentLocaleUtils}
-                locale={this.state.locale}
-                todayButton="Tänään"
-                selectedDays={this.state.startDate}
-                onDayClick={this.handleChangeStart}
+              <DayPickerInput
+                formatDate={formatDate}
+                parseDate={parseDate}
+                placeholder={`${formatDate(new Date())}`}
+                onDayChange={this.handleChangeStart}
+                dayPickerProps={{
+                  selectedDays: this.state.startDate,
+                  disabledDays: { after: this.state.endDate },
+                  locale: 'fi',
+                  localeUtils: MomentLocaleUtils,
+                  todayButton: 'Tänään',
+                }}
               />
-              <p>
-              {this.state.startDate
-                ? this.state.startDate.toLocaleDateString()
-                : 'Valitse aloituspäivä'}
-              </p>
             </div>
+            -
             <div className="date-picker">
-              <DayPicker
-                localeUtils={MomentLocaleUtils}
-                locale={this.state.locale}
-                todayButton="Tänään"
-                selectedDays={this.state.endDate}
-                onDayClick={this.handleChangeEnd}
+              <DayPickerInput
+                formatDate={formatDate}
+                parseDate={parseDate}
+                placeholder={`${formatDate(new Date())}`}
+                onDayChange={this.handleChangeEnd}
+                dayPickerProps={{
+                  selectedDays: this.state.endDate,
+                  disabledDays: { before: this.state.startDate },
+                  locale: 'fi',
+                  localeUtils: MomentLocaleUtils,
+                  todayButton: 'Tänään',
+                }}
               />
-              <p>
-              {this.state.endDate
-                ? this.state.endDate.toLocaleDateString()
-                : 'Valitse lopetuspäivä'}
-              </p>
             </div>
+            <button onClick={this.shortChartData}>Etsi</button>
+
           </div>
         </div>
       </div>
@@ -178,4 +194,4 @@ class Home extends Component {
     );
   }
 }
-export default Home;
+export default IndoorAir;

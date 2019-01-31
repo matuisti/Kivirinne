@@ -1,8 +1,20 @@
+import React, { Component } from 'react';
 import Highcharts from 'highcharts/highstock';
 import * as HC_more from 'highcharts/highcharts-more';
 import * as HC_solidgauge from 'highcharts/modules/solid-gauge';
 HC_more(Highcharts);
 HC_solidgauge(Highcharts);
+
+function highchartsLaquageOptions() {
+  Highcharts.setOptions({
+    lang: {
+      months: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Keäskuu', 'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
+      weekdays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
+      shortMonths: ['Tam', 'Hel', 'Maa', 'Huh', 'Tou', 'Kes', 'Hei', 'Elo', 'Syy', 'Lok', 'Mar', 'Jou'],
+      resetZoom: "Nollaa zoom"
+    }
+  });
+}
 
 function lineChartOptions(params) {
 
@@ -267,5 +279,6 @@ function plainLineChartOptions(params) {
 export {
   lineChartOptions,
   gaugeChartOptions,
-  plainLineChartOptions
+  plainLineChartOptions,
+  highchartsLaquageOptions
 };

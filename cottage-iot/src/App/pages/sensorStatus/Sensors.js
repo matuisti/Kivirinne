@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
-import AuthService from '../Authentication/AuthService';
-import QueryFunctions from '../components/QueryFunctions';
-import './styles/Camera.css';
-import Highcharts from 'highcharts/highstock';
+import Navbar from '../../components/Navbar';
+import QueryFunctions from '../../components/QueryFunctions';
+import AuthService from '../../Authentication/AuthService';
 
 class Camera extends Component {
   constructor(props) {

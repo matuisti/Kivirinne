@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
-import AuthService from '../Authentication/AuthService';
-import QueryFunctions from '../components/QueryFunctions';
-import moment from 'moment';
-import axios from 'axios';
-import './styles/Camera.css';
-import Highcharts from 'highcharts/highstock';
+import Navbar from '../../components/Navbar';
+import AuthService from '../../Authentication/AuthService';
+import QueryFunctions from '../../components/QueryFunctions';
+import './Camera.css';
 
 class Camera extends Component {
   constructor(props) {

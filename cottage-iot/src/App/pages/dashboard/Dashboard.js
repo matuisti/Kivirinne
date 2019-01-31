@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
-import AuthService from '../Authentication/AuthService';
-import QueryFunctions from '../components/QueryFunctions';
-import LineChart from '../components/LineChart';
+import Navbar from '../../components/Navbar';
+import AuthService from '../../Authentication/AuthService';
+import QueryFunctions from '../../components/QueryFunctions';
+import LineChart from '../../components/charts/LineChart';
 import Highcharts from 'highcharts/highstock';
-import './styles/Dashboard.css';
+import './Dashboard.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
-import LineChart from '../components/LineChart';
-import PieChart from '../components/PieChart';
-import AuthService from '../Authentication/AuthService';
-import QueryFunctions from '../components/QueryFunctions';
-import './styles/Home.css';
+import Navbar from '../../components/Navbar';
+import LineChart from '../../components/charts/LineChart';
+import PieChart from '../../components/charts/PieChart';
+import AuthService from '../../Authentication/AuthService';
+import QueryFunctions from '../../components/QueryFunctions';
 import Highcharts from 'highcharts/highstock';
 
 class Home extends Component {

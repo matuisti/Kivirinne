@@ -19,6 +19,7 @@ users.post('/register', function(req, res) {
 
   database.connection.getConnection(function(err, connection) {
     if (err) {
+      console.log(err);
       appData["error"] = 1;
       appData["data"] = "Internal Server Error";
       res.status(500).json(appData);

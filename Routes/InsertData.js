@@ -28,7 +28,7 @@ insert.get('/dht', function(req, res) {
             appData["data"] = "Internal Server Error";
             res.status(500).json(appData);
         } else {
-          connection.query('INSERT INTO raw_air_data SET ?', post, function(error, result) {
+          connection.query('INSERT INTO air_sensor_data SET ?', post, function(error, result) {
             if (error) {
               res.status(400).json(error);
             } else {
@@ -53,7 +53,7 @@ insert.get('/get/dht', function(req, res) {
           appData["data"] = "Internal Server Error";
           res.status(500).json(appData);
       } else {
-        	var sql = 'SELECT id, device_id, UNIX_TIMESTAMP(time) as time, temperature, humidity, voltage, awake_time FROM raw_air_data WHERE time BETWEEN timestamp(DATE_SUB(NOW(), INTERVAL ' + interval + ' ' + intervalformat + ')) AND timestamp(NOW())';
+        	var sql = 'SELECT id, device_id, UNIX_TIMESTAMP(time) as time, temperature, humidity, voltage, awake_time FROM air_sensor_data WHERE time BETWEEN timestamp(DATE_SUB(NOW(), INTERVAL ' + interval + ' ' + intervalformat + ')) AND timestamp(NOW())';
           connection.query(sql, function(error, rows, fields) {
             if (!error) {
               rows.map(function(key, index) {

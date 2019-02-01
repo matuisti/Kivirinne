@@ -44,7 +44,7 @@ api.get('/get/dht', function(req, res) {
           appData["data"] = "Internal Server Error";
           res.status(500).json(appData);
       } else {
-        var sql = 'SELECT id, device_id, UNIX_TIMESTAMP(time) as time, temperature, humidity, voltage, awake_time FROM raw_air_data WHERE '
+        var sql = 'SELECT id, device_id, UNIX_TIMESTAMP(time) as time, temperature, humidity, voltage, awake_time FROM air_sensor_data WHERE '
           + 'time BETWEEN timestamp(DATE_SUB(NOW(), INTERVAL ' + interval + ' ' + intervalformat + ')) AND timestamp(NOW())';
 
         connection.query(sql, function(error, rows, fields) {
@@ -92,7 +92,7 @@ api.get('/get/currentsensordata', function(req, res) {
           appData["data"] = "Internal Server Error";
           res.status(500).json(appData);
       } else {
-        var sql = 'SELECT * FROM raw_air_data WHERE id IN (SELECT MAX(id) AS id FROM raw_air_data GROUP BY device_id)';
+        var sql = 'SELECT * FROM air_sensor_data WHERE id IN (SELECT MAX(id) AS id FROM air_sensor_data GROUP BY device_id)';
         connection.query(sql, function(error, rows, fields) {
             if (!error) {
               if(!Object.keys(rows).length) {

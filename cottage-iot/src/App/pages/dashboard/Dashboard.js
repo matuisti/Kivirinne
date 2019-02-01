@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import Navbar from '../../components/Navbar';
 import AuthService from '../../Authentication/AuthService';
 import QueryFunctions from '../../components/QueryFunctions';
-import LineChart from '../../components/charts/LineChart';
-import Highcharts from 'highcharts/highstock';
 import './Dashboard.css';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
+import DashboardChartComponent from './DashboardChartComponent';
 
-class Camera extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.Auth = new AuthService();
@@ -44,96 +39,18 @@ class Camera extends Component {
       <div className="body">
         <Navbar/>
           <div className="plain-chart-row1">
-            <div className="plain-chart-column plain">
-              <div className="chart-text">
-                <p>{this.state.weekData1[this.state.weekData1.length - 1]}</p>
-                <p>Olohuone</p>
-                <p><FontAwesomeIcon icon="temperature-high"/></p>
-              </div>
-              <div className="chart">
-                {
-                  !this.state.lineLoad
-                    ? <div className="Graph-loader"/>
-                  : <LineChart container="tempChart1" type="Chart" title="Sisäilma" base="plain" data={this.state.weekData1} />
-                }
-              </div>
-            </div>
-            <div className="plain-chart-column plain">
-              <div className="chart-text">
-                <p>{this.state.weekData2[this.state.weekData2.length - 1]}</p>
-                <p>Eteinen</p>
-                <p><FontAwesomeIcon icon="temperature-high"/></p>
-              </div>
-              <div className="chart">
-                {
-                  !this.state.lineLoad
-                    ? <div className="Graph-loader"/>
-                  : <LineChart container="tempChart2" type="Chart" title="Sisäilma" base="plain" data={this.state.weekData2} />
-                }
-              </div>
-            </div>
-            <div className="plain-chart-column plain">
-              <div className="chart-text">
-                <p>{this.state.weekData3[this.state.weekData3.length - 1]}</p>
-                <p>Makuuhuone</p>
-                <p><FontAwesomeIcon icon="temperature-high"/></p>
-              </div>
-              <div className="chart">
-                {
-                  !this.state.lineLoad
-                    ? <div className="Graph-loader"/>
-                  : <LineChart container="tempChart3" type="Chart" title="Sisäilma" base="plain" data={this.state.weekData3} />
-                }
-              </div>
-            </div>
+            <DashboardChartComponent loaded={this.state.lineLoad} chartName={'tempChart1'} title={'Olohuone'} chartData={this.state.weekData1} />
+            <DashboardChartComponent loaded={this.state.lineLoad} chartName={'tempChart2'} title={'Eteinen'} chartData={this.state.weekData2} />
+            <DashboardChartComponent loaded={this.state.lineLoad} chartName={'tempChart3'} title={'Makuuhuone'} chartData={this.state.weekData3} />
           </div>
           <div className="plain-chart-row1">
-            <div className="plain-chart-column plain">
-              <div className="chart-text">
-                <p>{this.state.weekData1[this.state.weekData1.length - 1]}</p>
-                <p>Olohuone</p>
-                <p><FontAwesomeIcon icon="tint"/></p>
-              </div>
-              <div className="chart">
-                {
-                  !this.state.lineLoad
-                    ? <div className="Graph-loader"/>
-                  : <LineChart container="humidityChart1" type="Chart" title="Sisäilma" base="plain" data={this.state.weekData1} />
-                }
-              </div>
-            </div>
-            <div className="plain-chart-column plain">
-              <div className="chart-text">
-                <p>{this.state.weekData2[this.state.weekData2.length - 1]}</p>
-                <p>Eteinen</p>
-                <p><FontAwesomeIcon icon="tint"/></p>
-              </div>
-              <div className="chart">
-                {
-                  !this.state.lineLoad
-                    ? <div className="Graph-loader"/>
-                  : <LineChart container="humidityChart2" type="Chart" title="Sisäilma" base="plain" data={this.state.weekData2} />
-                }
-              </div>
-            </div>
-            <div className="plain-chart-column plain">
-              <div className="chart-text">
-                <p>{this.state.weekData3[this.state.weekData3.length - 1]}</p>
-                <p>Makuuhuone</p>
-                <p><FontAwesomeIcon icon="tint"/></p>
-              </div>
-              <div className="chart">
-                {
-                  !this.state.lineLoad
-                    ? <div className="Graph-loader"/>
-                  : <LineChart container="humidityChart3" type="Chart" title="Sisäilma" base="plain" data={this.state.weekData3} />
-                }
-              </div>
-            </div>
+            <DashboardChartComponent loaded={this.state.lineLoad} chartName={'humidityChart1'} title={'Olohuone'} chartData={this.state.weekData1} />
+            <DashboardChartComponent loaded={this.state.lineLoad} chartName={'humidityChart2'} title={'Eteinen'} chartData={this.state.weekData2} />
+            <DashboardChartComponent loaded={this.state.lineLoad} chartName={'humidityChart3'} title={'Makuuhuone'} chartData={this.state.weekData3} />
           </div>
       </div>
     );
   }
 }
 
-export default Camera;
+export default Dashboard;
